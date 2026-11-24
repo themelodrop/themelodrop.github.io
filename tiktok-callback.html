@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Connected - Melodrop</title><link rel="icon" href="logo.png"><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<img src="logo.png" alt="Melodrop logo" class="logo">
+<h1 id="h">Connecting TikTok</h1>
+<p id="msg">Reading the sign-in result...</p>
+<p><button id="copy" hidden style="font:inherit;padding:10px 18px;border-radius:10px;border:0;background:#3DD6C6;color:#16132E;cursor:pointer">Copy code</button></p>
+<p id="note" hidden>Paste it into the Melodrop Publisher sign-in prompt. The code works once and expires in a few minutes. This page does not send it anywhere.</p>
+</main>
+<footer><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></footer>
+<script>
+const q = new URLSearchParams(location.search);
+const code = q.get("code"), err = q.get("error");
+const h = document.getElementById("h"), msg = document.getElementById("msg");
+if (code) {
+  h.textContent = "TikTok signed in";
+  msg.textContent = "Copy this one-time code:";
+  const b = document.getElementById("copy");
+  b.hidden = false; document.getElementById("note").hidden = false;
+  b.onclick = () => navigator.clipboard.writeText(code).then(() => b.textContent = "Copied");
+} else if (err) {
+  h.textContent = "TikTok sign-in was not completed";
+  msg.textContent = (q.get("error_description") || err);
+} else {
+  msg.textContent = "Nothing to show here.";
+}
+</script>
+</body></html>
