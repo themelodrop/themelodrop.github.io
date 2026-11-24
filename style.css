@@ -1,0 +1,9 @@
+body{margin:0;background:#16132E;color:#ECEAF6;font:17px/1.6 system-ui,-apple-system,Segoe UI,sans-serif}
+main{max-width:680px;margin:0 auto;padding:40px 22px}
+h1{font-size:2rem;margin:.2em 0}
+h2{font-size:1.15rem;margin-top:1.8em;color:#FFB547}
+a{color:#3DD6C6}
+.logo{width:120px;height:120px;border-radius:50%;display:block}
+.tag{font-size:1.2rem;color:#fff}
+.links{list-style:none;padding:0;display:flex;gap:18px;flex-wrap:wrap}
+footer{text-align:center;padding:30px;color:#9a96b8;font-size:.9rem}
