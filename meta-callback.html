@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<meta name="referrer" content="no-referrer">
+<title>Connected - Melodrop</title><link rel="icon" href="logo.png"><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<img src="logo.png" alt="Melodrop logo" class="logo">
+<h1 id="h">Connecting</h1>
+<p id="msg">Reading the sign-in result...</p>
+<p><button id="copy" hidden style="font:inherit;padding:10px 18px;border-radius:10px;border:0;background:#3DD6C6;color:#16132E;cursor:pointer">Copy code</button></p>
+<p id="note" hidden>Paste it into the Melodrop Publisher sign-in prompt. The code works once and expires in a few minutes. This page does not send it anywhere.</p>
+</main>
+<footer><a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms of Service</a></footer>
+<script>
+// Meta (Instagram via Facebook Login) and Threads both redirect here with ?code=...&state=...
+// state starts with "fb-" (Instagram) or "th-" (Threads). Meta appends "#_=_" / "#_" to the URL; it is ignored.
+const q = new URLSearchParams(location.search);
+const code = (q.get("code") || "").replace(/#_?=?_?$/, "");
+const err = q.get("error") || q.get("error_reason");
+const state = q.get("state") || "";
+const service = state.startsWith("th-") ? "Threads" : state.startsWith("fb-") ? "Instagram" : "Meta";
+const h = document.getElementById("h"), msg = document.getElementById("msg");
+if (location.hash) history.replaceState(null, "", location.pathname + location.search);
+if (code) {
+  h.textContent = service + " signed in";
+  msg.textContent = "Copy this one-time code:";
+  const b = document.getElementById("copy");
+  b.hidden = false; document.getElementById("note").hidden = false;
+  b.onclick = () => navigator.clipboard.writeText(code).then(() => b.textContent = "Copied");
+} else if (err) {
+  h.textContent = service + " sign-in was not completed";
+  msg.textContent = (q.get("error_description") || err).replace(/\+/g, " ");
+} else {
+  h.textContent = "Melodrop";
+  msg.textContent = "Nothing to show here.";
+}
+</script>
+</body></html>
